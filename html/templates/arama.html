@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Bilet Arama{% endblock %}
+{% block content %}
+<h2>Bilet Arama:</h2>
+  <b><a href="/bilet/index"><<--Seferlerim</a><br></b><br>
+<p>{{ mesaj }}</p>
+<form method="post" action=".">
+
+<table>
+  <tr>
+    <td>Kimlik No</td><td>:</td><td><input type="text" name="p_kimlikno"></td>
+  </tr>
+  <tr>
+    <td>Yolcu Adı</td><td>:</td><td><input type="text" name="p_yolcuadi"></td>
+  </tr>
+  <tr>
+    <td>Yolcu Soyadı</td><td>:</td><td><input type="text" name="p_yolcusoyadi"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td><td>&nbsp;</td><td align="right"><input type="submit" value="Listele" /></td>
+  </tr>
+</table>
+
+<input type="hidden" name="next" value="/bilet/index" />
+</form>
+
+{% endblock %}

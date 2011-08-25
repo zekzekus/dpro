@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Bilet Bilgileri{% endblock %}
+{% block content %}
+<h2>Bilet Düzeltme:</h2>
+<b><a href="/bilet/index"><<--Seferlerim</a><br></b>
+<p><h3>
+  <table border="0">
+    <tr><td><b>Sefer Adı</td><td>:</td> </b><td align="right">{{ bilet.koltuk.sefer.sefer_adi }} </td></tr>
+    <tr><td><b>Sefer Tarihi</td><td>:</td> </b><td align="right">{{ bilet.koltuk.sefer.sefer_tarihi|date:"d/m/Y" }}</td></tr>
+  </table>
+</h3></p>
+<form name="form1" method="post" action="">
+  <table border="0">
+    <tr><td><b>Koltuk No</b></td><td><b>:</b></td><td align="right">{{ bilet.koltuk.koltuk_no }}</td></tr>
+    <tr><td><b>Cinsiyet</b></td><td><b>:</b></td>
+      <td align="right">
+        {% ifequal  bilet.cinsiyet "K" %}
+          Bayan
+        {% else %}
+          Erkek
+        {% endifequal %}
+      </td>
+    </tr>
+    {% for alan in form %}
+    <tr><td><b>{{ alan.label_tag }}</b></td><td><b>:</b></td>
+      <td align="right">
+        {% if alan.errors %} 
+          {{ alan.errors }} 
+        {% endif %}
+        {% if alan.help_text %} 
+          {{ alan.help_text }}
+        {% endif %}
+        {{ alan }}
+      </td>
+    </tr>
+    {% endfor %}
+    <tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td align="right"><a href="/bilet/biletsil/{{ bilet.id }}">Kaydı Sil</a><input type="submit" value="Bilet Bilgisi Kaydet"/></td></tr>
+  </table>
+</form>
+{% endblock %}

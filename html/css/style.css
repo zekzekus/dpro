@@ -1,0 +1,12 @@
+#genel
+{
+    border: #FFD400 2px solid;
+    background-color: #FDEE9B;
+    margin: 0 0 10px 0;
+    position: relative;
+}
+
+#genel h2
+{
+    font-color: red;
+}

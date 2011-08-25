@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Bilet Silme{% endblock %}
+{% block content %}
+<h2>Bilet Silme:</h2>
+  <b><a href="/bilet/index"><<--Seferlerim</a><br></b><br>
+<h3><font color="red">Aşağıdaki Bileti Kalıcı Olarak Silmek İstediğinizden Emin misiniz?</font></h3>
+
+<form method="post" action="">
+<table>
+  <tr>
+    <td>Sefer Adı</td><td>:</td><td>{{ bilet.koltuk.sefer.sefer_adi }}</td>
+  </tr>
+  <tr>
+    <td>Sefer Tarihi</td><td>:</td><td>{{ bilet.koltuk.sefer.sefer_tarihi }}</td>
+  </tr>
+  <tr>
+    <td>Koltuk No</td><td>:</td><td>{{ bilet.koltuk.koltuk_no }}</td>
+  </tr>
+  <tr>
+    <td>Kimlik No</td><td>:</td><td>{{ bilet.kimlik_no }}</td>
+  </tr>
+  <tr>
+    <td>Yolcu Adı</td><td>:</td><td>{{ bilet.yolcu_adi }}</td>
+  </tr>
+  <tr>
+    <td>Yolcu Soyadı</td><td>:</td><td>{{ bilet.yolcu_soyadi }}</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td><td>&nbsp;</td><td align="right"><input type="submit" value="Bileti Kalıcı Olarak Sil" /></td>
+  </tr>
+</table>
+<input type="hidden" name="next" value="/bilet/index" />
+</form>
+
+{% endblock %}

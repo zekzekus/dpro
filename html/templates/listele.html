@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Bilet Listesi{% endblock %}
+{% block content %}
+  <h2>Bilet Listesi:</h2>
+  <b><a href="/bilet/index"><<--Seferlerim</a><br></b>
+  <p><h3>
+    <table border="0">
+      <tr><td><b>Sefer Adı</td><td>:</td> </b><td align="right">{{ sefer.sefer_adi }} </td></tr>
+      <tr><td><b>Sefer Tarihi</td><td>:</td> </b><td align="right">{{ sefer.sefer_tarihi|date:"d/m/Y" }}</td></tr>
+    </table>
+  </h3></p>
+  <table border="1" cellspacing="0" cellpadding="2" width="%100">
+    <tr bgcolor="lightblue"><th>İşlem</th><th>Koltuk No</th><th>Kimlik No</th><th>Yolcu Adı</th><th>Yolcu Soyadı</th><th>Cinsiyet</th><th>Özürlü?</th><th>Tel No</th><th>Gsm No</th><th>Mahalle</th></tr>
+  {% for bilet in bilet_list %}
+    <tr bgcolor="lightgreen">
+      <td><a href="/bilet/degistir/{{ bilet.koltuk.id }}">Düzenle</a></td><td>{{ bilet.koltuk.koltuk_no }}</td><td>{{ bilet.kimlik_no }}</td><td>{{ bilet.yolcu_adi }}</td><td>{{ bilet.yolcu_soyadi }}</td>
+      <td>{{ bilet.cinsiyet }}</td><td>{{ bilet.ozurlu_eh }}</td><td>{{ bilet.tel_no }}</td><td>{{ bilet.gsm_no }}</td><td>{{ bilet.mahalle }}</td>
+    </tr>    
+  {% endfor %}
+  </table>
+{% endblock %}

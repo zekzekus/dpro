@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Bilet Listesi{% endblock %}
+{% block content %}
+  <h2>Bilet Listesi:</h2>
+  <b><a href="/bilet/index"><<--Seferlerim</a><br></b>
+    <br>
+  <table border="1" cellspacing="0" cellpadding="2" width="%100">
+    <tr bgcolor="lightblue">
+      <th>İşlem</th><th>Sefer Adı</th><th>Kol. No</th><th>Kim. No</th><th>Adı</th><th>Soyadı</th><th>C</th><th>Özürlü?</th><th>Tel</th><th>Gsm</th><th>Mahalle</th>
+    </tr>
+  {% for bilet in bilet_list %}
+    <tr bgcolor="lightgreen">
+      <td><a href="/bilet/degistir/{{ bilet.koltuk.id }}">Düzenle</td></td><td><b>{{ bilet.koltuk.sefer.sefer_adi }}</b></td><td>{{ bilet.koltuk.koltuk_no }}</td>
+      <td>{{ bilet.kimlik_no }}</td><td>{{ bilet.yolcu_adi }}</td><td>{{ bilet.yolcu_soyadi }}</td><td>{{ bilet.cinsiyet }}</td><td>{{ bilet.ozurlu_eh }}</td>
+      <td>{{ bilet.tel_no }}</td><td>{{ bilet.gsm_no }}</td><td>{{ bilet.mahalle }}</td>
+    </tr>    
+  {% endfor %}
+  </table>
+{% endblock %}

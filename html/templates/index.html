@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Seferlerim{% endblock %}
+{% block content %}
+  <h2>Seferlerim:</h2>
+  {% if seferler %}
+    | <a href="/bilet/ara">Bilet Arama</a> | <br><br>
+    <table border="1" cellspacing="0" cellpadding="2">
+      <tr bgcolor="lightblue"><th>Sefer Adı</th><th>Sefer Tarihi</th><th>Sefer Saati</th><th>Kalkış Yeri</th><th>İşlemler</th></tr>
+    {% for sefer in seferler %}
+      <tr bgcolor="lightgreen">
+        <td>{{ sefer.sefer_adi }}</td>
+        <td>{{ sefer.sefer_tarihi|date:"d/m/Y"}}</td>
+        <td>{{ sefer.kalkis_saati }}</td>
+        <td>{{ sefer.kalkis_yeri }}</td>
+        <td>
+          <a href="/bilet/biletdoldur/H/{{ sefer.id }}">Bilet Kes</a> | 
+          <a href="/bilet/biletdoldur/O/{{ sefer.id }}">Ön Rezerv</a> | 
+          <a href="/bilet/biletdoldur/D/{{ sefer.id }}">Dernek</a> | 
+          <a href="/bilet/biletlistele/{{ sefer.id }}">Listele</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    Sorumlu Olduğunuz Sefer Yok.
+  {% endif %}
+{% endblock %}

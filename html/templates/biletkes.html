@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %} Koltuk Seç {% endblock %}
+{% block content %}
+  <h2>Koltuk Seçimi:</h2>
+  <a href="/bilet/index"><<--Seferlerim</a>
+  <p><h3>
+    <table border="0">
+      <tr><td><b>Sefer Adı</td><td>:</td> </b><td align="right">{{ sefer.sefer_adi }} </td></tr>
+      <tr><td><b>Sefer Tarihi</td><td>:</td> </b><td align="right">{{ sefer.sefer_tarihi|date:"d/m/Y" }}</td></tr>
+    </table>
+  </h3></p>
+
+<table border="0">
+</tr><td valign="top">
+
+  <table border="1" cellspacing="0" cellpadding="2">
+    <tr bgcolor="lightblue"><th>Koltuk No</th><th>Rezerve</th></tr>
+      {% for koltuk in koltuklar1 %}
+        {% ifequal koltuk.rezerve_eh "H" %}
+          <tr bgcolor="lightgreen">
+        {% else %}
+          {% ifequal koltuk.rezerve_eh "E" %}
+            <tr bgcolor="cyan">
+          {% else %}
+            {% ifequal koltuk.rezerve_eh "K" %}
+              <tr bgcolor="pink">
+            {% else %}
+              <tr bgcolor="red">
+            {% endifequal %}
+          {% endifequal %}
+        {% endifequal %}
+      <td align="center">{{ koltuk.koltuk_no }}</td>
+      <td align="center"><a href="/bilet/biletdoldur/{{ koltuk.id }}">{{ koltuk.rezerve_eh }}</a></td>
+    </tr>
+      {% endfor %}
+  </table>
+
+</td>
+<td>
+
+  <table border="1" cellspacing="0" cellpadding="2">
+    <tr bgcolor="lightblue"><th>Koltuk No</th><th>Rezerve</th></tr>
+      {% for koltuk in koltuklar2 %}
+        {% ifequal koltuk.rezerve_eh "H" %}
+          <tr bgcolor="lightgreen">
+        {% else %}
+          {% ifequal koltuk.rezerve_eh "E" %}
+            <tr bgcolor="cyan">
+          {% else %}
+            {% ifequal koltuk.rezerve_eh "K" %}
+              <tr bgcolor="pink">
+            {% else %}
+              <tr bgcolor="red">
+            {% endifequal %}
+          {% endifequal %}
+        {% endifequal %}
+      <td align="center">{{ koltuk.koltuk_no }}</td>
+      <td align="center"><a href="/bilet/biletdoldur/{{ koltuk.id }}">{{ koltuk.rezerve_eh }}</a></td>
+    </tr>
+      {% endfor %}
+  </table>
+
+</td></tr>
+</table>
+<table border="0">
+<tr><td>O=Ön Rezerv</td><td>D=Dernek</td><td>H=Boş</td></tr>
+<tr><td>E=Rezerv(Erkek)</td><td>K=Rezerv(Bayan)</td><td>G=Rezerv(Geçici)</td></tr>
+</table>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Bilet Bilgileri{% endblock %}
+{% block content %}
+<script language="JavaScript">
+  function resubmit(){
+    document.form1.action="/bilet/biletdoldur/{{ secim }}/{{ sefer.id }}/?kimlik=1";
+    document.form1.submit();
+  }  
+  function setFocus(){
+    document.getElementById("id_yolcu_adi").focus();
+  }
+  function setFocus1(){
+    document.getElementById("id_vat_no").focus();
+  }
+</script>
+  {% ifequal secim "H" %}
+    <h2>Bilet Giriş:</h2>
+  {% else %}
+    {% ifequal secim "O" %}
+      <h2>Ön Rezerv Bileti:</h2>
+    {% else %}
+      <h2>Dernek Bileti:</h2>
+    {% endifequal %}
+  {% endifequal %}
+  <b><a href="/bilet/index"><<--Seferlerim</a><br></b>
+  <p><h3>
+    <table border="0">
+      <tr><td><b>Sefer Adı</td><td>:</td> </b><td align="right">{{ sefer.sefer_adi }} </td></tr>
+      <tr><td><b>Sefer Tarihi</td><td>:</td> </b><td align="right">{{ sefer.sefer_tarihi|date:"d/m/Y" }}</td></tr>
+    </table>
+  </h3></p>
+<form name="form1" method="post" action="/bilet/biletdoldur/{{ secim }}/{{ sefer.id }}/?kimlik=0">
+<table border="0">
+  <tr>
+    <td valign="top">
+{% ifequal kolsay 0 %}
+  <b>Boş Koltuk Yok</b>
+{% else %}
+<!-- Form Tablosu BASLAR --> 
+  {% if uyari %}
+    <b><font color="red">{{ uyari }}</font></b>
+  {% endif %}
+     <table border="0">
+         <tr><td><b>Koltuk No</b></td><td><b>:</b></td>
+           <td>
+             <select name="koltuk_no" id="id_koltuk_no">
+             {% for satir in kollist %}
+               {% for koltuk in satir %}
+                 {% ifequal koltuk.rezerve_eh secim %}
+                   {% if tmpkoltuk %}
+                     {% ifequal koltuk.koltuk_no tmpkoltuk %}
+                       <option value="{{ koltuk.koltuk_no }}" selected>{{ koltuk.koltuk_no }}</option>
+                     {% else %}
+                       <option value="{{ koltuk.koltuk_no }}">{{ koltuk.koltuk_no }}</option>
+                     {% endifequal %}
+                   {% else %}
+                       <option value="{{ koltuk.koltuk_no }}">{{ koltuk.koltuk_no }}</option>
+                   {% endif %}
+                 {% endifequal %}
+               {% endfor %}
+             {% endfor %}
+             </select>
+           </td>
+         </tr>
+         <tr><td><b>Vatandaşlık No</b></td><td>:</td><td><input name="vat_no" id="id_vat_no" type="text" value="{{ tmpkimlik }}" maxlength="11"onBlur=resubmit()></td></tr>
+       {% for alan in form %}
+         <tr><td><b>{{ alan.label_tag }}</b></td><td><b>:</b></td>
+           <td>
+             {% ifequal kimlik "0" %}
+               {% if alan.errors %} 
+                 {{ alan.errors }} 
+               {% endif %}
+               {% if alan.help_text %} 
+                 {{ alan.help_text }}
+               {% endif %}
+             {% endifequal %}
+             {{ alan }}
+           </td>
+         </tr>
+       {% endfor %}
+       <tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr>
+       <tr><td></td><td></td><td align="right"><input type="submit" value="Bilet Bilgisi Kaydet"/></td></tr>
+     </table>
+<!-- Form Tablosu BITER -->
+{% endifequal %}
+    </td>
+<td valign="top">
+<!-- Koltuk Yerlesimi Tablosu BASLAR(YENI) -->
+<table border="1" cellspacing="0" cellpadding="2">
+  <tr bgcolor="lightblue"><td>####</td><td>####</td><td>####</td><td>####</td></tr>
+  {% for satir in kollist %}
+    <tr>
+    {% for koltuk in satir %}
+          {% ifequal koltuk.rezerve_eh "H" %}
+            <td bgcolor="lightgreen" align="center">
+          {% else %}
+            {% ifequal koltuk.rezerve_eh "E" %}
+              <td bgcolor="cyan" align="center">
+            {% else %}
+              {% ifequal koltuk.rezerve_eh "K" %}
+                <td bgcolor="pink" align="center">
+              {% else %}
+                <td bgcolor="red" align="center">
+              {% endifequal %}
+            {% endifequal %}
+          {% endifequal %}
+          {{ koltuk.koltuk_no }}
+        </td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+<!-- Koltuk Yerlesimi Tablosu BITER(YENI) -->
+</td>
+  </tr>
+</table>
+</form>
+{% endblock %}

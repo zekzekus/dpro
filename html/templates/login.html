@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Sisteme Giriş{% endblock %}
+{% block content %}
+<h2>Sisteme Giriş:</h2>
+{% if form.has_errors %}
+<p>Kullanıcı Adı ya da Parola hatalı.</p>
+{% endif %}
+
+<form method="post" action=".">
+<table>
+<tr><td><label for="id_username">Kullanıcı</label></td><td>:</td><td>{{ form.username }}</td></tr>
+<tr><td><label for="id_password">Parola</label></td><td>:</td><td>{{ form.password }}</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td align="right"><input type="submit" value="Giriş" /></td></tr>
+</table>
+
+<input type="hidden" name="next" value="/bilet/index" />
+</form>
+
+{% endblock %}
