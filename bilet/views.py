@@ -11,10 +11,7 @@ import csv
 @login_required
 def index(request):
     user     = request.user
-    if user.username == 'OZLEM':
-        seferler = Sefer.objects.all()
-    else:
-        seferler = Sefer.objects.filter(sorumlu=user.id)
+    seferler = Sefer.objects.filter(sorumlu=user.id)
     dict = {'seferler': seferler,
             'user': user
     }
@@ -35,15 +32,10 @@ def listele(request, p_seferid):
 def ara(request):
     user = request.user
     if request.POST:
-        if user.username == 'OZLEM':
-            biletler = Bilet.objects.filter(kimlik_no__icontains=request.POST['p_kimlikno'],
-                                            yolcu_adi__icontains=request.POST['p_yolcuadi'],
-                                            yolcu_soyadi__icontains=request.POST['p_yolcusoyadi']).order_by('koltuk_no')
-        else:
-            biletler = Bilet.objects.filter(koltuk__sefer__sorumlu=user, 
-                                            kimlik_no__icontains=request.POST['p_kimlikno'],
-                                            yolcu_adi__icontains=request.POST['p_yolcuadi'],
-                                            yolcu_soyadi__icontains=request.POST['p_yolcusoyadi']).order_by('bilet_bilet__koltuk__sefer.sefer_tarihi')
+        biletler = Bilet.objects.filter(koltuk__sefer__sorumlu=user, 
+                                        kimlik_no__icontains=request.POST['p_kimlikno'],
+                                        yolcu_adi__icontains=request.POST['p_yolcuadi'],
+                                        yolcu_soyadi__icontains=request.POST['p_yolcusoyadi']).order_by('bilet_bilet__koltuk__sefer.sefer_tarihi')
         return object_list(request, queryset=biletler, template_name='listele2.html', template_object_name='bilet', extra_context={'user': user})        
     dict = {'user': user}
     return render_to_response('arama.html', dict)
